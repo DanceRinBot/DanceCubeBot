@@ -4,6 +4,7 @@ import com.dancecube.token.Token;
 import com.dancecube.token.TokenBuilder;
 import com.mirai.event.MainHandler;
 import com.mirai.task.SchedulerTask;
+import net.mamoe.mirai.console.plugin.jvm.JvmPluginDescriptionBuilder;
 import org.yaml.snakeyaml.Yaml;
 import net.mamoe.mirai.console.extension.PluginComponentStorage;
 import net.mamoe.mirai.console.plugin.jvm.JavaPlugin;
@@ -29,7 +30,12 @@ public final class MiraiBot extends JavaPlugin {
     String path = configPath + "UserTokens.json";
 
     private MiraiBot() {
-        super(JvmPluginDescription.loadFromResource("plugin.yml", MiraiBot.class.getClassLoader()));
+        super(new JvmPluginDescriptionBuilder( // 必要属性
+                        "com.mirai.lin", // id
+                        "1.2" // version
+                ).author("Lin,Jingsong2008") // 可选属性，可以不提供， 直接 build
+                        .build()
+        );
     }
 
     @Override

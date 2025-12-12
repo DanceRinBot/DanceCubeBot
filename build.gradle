@@ -13,6 +13,9 @@ def releaseTime() {
 }
 version = 'build-'+releaseTime()
 
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
 mirai {
     jvmTarget = JavaVersion.VERSION_17
 }

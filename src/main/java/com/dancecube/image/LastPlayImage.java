@@ -162,16 +162,7 @@ public class LastPlayImage {
         return new ByteArrayInputStream(EncoderPNG.encode(resultImage).getBytes());
     }
 
-    public static void main(String[] args) throws IOException {
-        Token token = new Token(939088, "xvp1mVzCtOYJ4dQ-l9ujOWDNwU4pFkoXsnrw3gIZwukJNo61wDNlhadDTBcLm5wYWezhVnm_zAGXabtplhGATWa2-pDdiSQ_-HLiozBnLX81drC3vkIEisTGfH2jbh2V7h2icD2hOjGC0pSEPYWA4Miv_l59_k3J8DUdV8n9PE5kI6A5_dUQ2rXXL7PWHdJPlYQGcFKUz9Q56ctai5u761p1gs6s4D3pVllbNJiG3_OhKxGB7M9GiDVcPBhCzd88ZnMddYVmgTtXW3vhrmME7mbtfM0lmP0WVQRmA0cdZwIWXd1JeyDH0d186syuuch2qIM3TTdz1FgBXbCpsU_ZpSUFdWapFyQNQXrgb5kUAEv3o2MHGQ2hzxAXZA9RdnNqb");
 
-        Path path = new File(savePath).toPath();
-        List<RecentMusicInfo> allRecentList = RatioCalculator.getAllRecentList(token.getBearerToken());
-
-        byte[] bytes = generate(token, allRecentList.get(9)).readAllBytes();
-        Files.write(path, bytes, StandardOpenOption.WRITE);
-        System.out.println("Done!");
-    }
     // Todo  绘制新记录
 
     private static void drawNewRec(Canvas canvas, RecentMusicInfo info, float x, float y) {
@@ -294,5 +285,17 @@ public class LastPlayImage {
             case C -> LV_C;
             default -> LV_D;
         };
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        Token token = new Token(939088, "xvp1mVzCtOYJ4dQ-l9ujOWDNwU4pFkoXsnrw3gIZwukJNo61wDNlhadDTBcLm5wYWezhVnm_zAGXabtplhGATWa2-pDdiSQ_-HLiozBnLX81drC3vkIEisTGfH2jbh2V7h2icD2hOjGC0pSEPYWA4Miv_l59_k3J8DUdV8n9PE5kI6A5_dUQ2rXXL7PWHdJPlYQGcFKUz9Q56ctai5u761p1gs6s4D3pVllbNJiG3_OhKxGB7M9GiDVcPBhCzd88ZnMddYVmgTtXW3vhrmME7mbtfM0lmP0WVQRmA0cdZwIWXd1JeyDH0d186syuuch2qIM3TTdz1FgBXbCpsU_ZpSUFdWapFyQNQXrgb5kUAEv3o2MHGQ2hzxAXZA9RdnNqb");
+
+        Path path = new File(savePath).toPath();
+        List<RecentMusicInfo> allRecentList = RatioCalculator.getAllRecentList(token.getBearerToken());
+
+        byte[] bytes = generate(token, allRecentList.get(9)).readAllBytes();
+        Files.write(path, bytes, StandardOpenOption.WRITE);
+        System.out.println("Done!");
     }
 }
