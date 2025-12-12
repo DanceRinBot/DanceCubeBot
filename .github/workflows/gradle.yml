@@ -35,7 +35,7 @@ jobs:
       run: ./gradlew dependencies
 
     - name: Build project
-      run: ./gradlew clean build
+      run: ./gradlew buildPlugin
 
     - name: Test
       run: ./gradlew test
