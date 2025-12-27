@@ -88,28 +88,27 @@ public final class TokenBuilder {
         return getQrcodeUrl(id);
     }
 
-    private String getQrcodeUrl(String id) {
-        // 对于含有'+' '/'等符号的TokenId会自动url编码
-        id = URLEncoder.encode(id, StandardCharsets.UTF_8);
+    public String getQrcodeUrl(String id) {
+    // 对于含有'+' '/'等符号的TokenId会自动url编码
+    id = URLEncoder.encode(id, StandardCharsets.UTF_8);
 
-        String string = id + "%n"; // 修改为 id + 换行符
-        try {
-            Response response = HttpUtil.httpApi("https://dancedemo.shenghuayule.com/Dance/api/Common/GetQrCode?id=" + id);
-            if (response != null && response.body() != null) {
-                string += response.body().string(); // 保留原有逻辑
-                response.close(); // 释放
-                return JsonParser.parseString(string).getAsJsonObject().get("QrcodeUrl").getAsString();
-            }
-            return "";
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (NullPointerException e) {
-            System.out.println(string);
-            ids.remove(index);
-            System.out.println("# ID:" + id + " 不可用已删除，还剩下" + getSize() + "条");
-            throw new RuntimeException(e);
+    try {
+        Response response = HttpUtil.httpApi("https://dancedemo.shenghuayule.com/Dance/api/Common/GetQrCode?id=" + id);
+        if (response != null && response.body() != null) {
+            String responseBody = response.body().string();
+            response.close(); // 释放
+            return JsonParser.parseString(responseBody).getAsJsonObject().get("QrcodeUrl").getAsString();
         }
+        return "";
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    } catch (NullPointerException | com.google.gson.JsonSyntaxException e) {
+        System.out.println("# ID:" + id + " 响应解析失败，可能已失效");
+        ids.remove(index);
+        System.out.println("# ID:" + id + " 不可用已删除，还剩下" + getSize() + "条");
+        throw new RuntimeException(e);
     }
+}
 
     public String getNewID() {
         try {
